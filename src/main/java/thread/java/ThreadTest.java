@@ -15,6 +15,7 @@ public class ThreadTest {
 
         StringBuffer info = new StringBuffer();
         Thread t1 = new Thread() {
+            @Override
             public void run() {
                 String name = getNmae();
                 info.append(name);
@@ -22,14 +23,25 @@ public class ThreadTest {
             }
         };
         Thread t2 = new Thread() {
+            @Override
             public void run() {
                 String age = getAgeStr();
                 info.append(age);
                 latch.countDown();
             }
         };
+
+        Thread t3 = new Thread(){
+            @Override
+            public void  run(){
+                String classStr = getClassstr();
+                info.append(classStr);
+                latch.countDown();
+            }
+        };
         t1.start();
         t2.start();
+        t3.start();
         latch.await();
 
             System.out.println("info=" + info);
@@ -42,4 +54,7 @@ public class ThreadTest {
     public  static String getAgeStr() {
         return "age=23;";
     }
+
+    public  static  String getClassstr(){ return "class=123班";}
+
 }
